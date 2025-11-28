@@ -1,1 +1,329 @@
-console.log('Happy developing ✨')
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập Java Module 1</title>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        .bai-tap {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+        h2 {
+            color: #007bff;
+        }
+        input, button, select {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        input, select {
+            width: 100%;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+        .phone-list {
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .phone-item {
+            padding: 8px;
+            margin: 5px 0;
+            background: #f9f9f9;
+            border-left: 3px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+<h1>Bài tập Java Module 1 của Nguyễn Kỳ</h1>
+
+<!-- BÀI 1 -->
+<div class="bai-tap">
+    <h2>Bài 1: Xử lý mảng số nguyên</h2>
+    <label>Nhập mảng (cách nhau bởi dấu phẩy):</label>
+    <input type="text" id="input1" placeholder="Ví dụ: 1,2,3,4,5,6">
+    <button onclick="bai1()">Xử lý Bài 1</button>
+    <div id="result1" class="result" style="display:none;"></div>
+</div>
+
+<!-- BÀI 2 -->
+<div class="bai-tap">
+    <h2>Bài 2: Kiểm tra ký tự in hoa trong chuỗi</h2>
+    <label>Nhập chuỗi cần kiểm tra:</label>
+    <input type="text" id="input2" placeholder="Ví dụ: abcdEF">
+    <button onclick="bai2()">Xử lý Bài 2</button>
+    <div id="result2" class="result" style="display:none;"></div>
+</div>
+
+<!-- BÀI 3 -->
+<div class="bai-tap">
+    <h2>Bài 3: Tìm các số nguyên tố</h2>
+    <label>Nhập mảng số (cách nhau bởi dấu phẩy):</label>
+    <input type="text" id="input3" placeholder="Ví dụ: 1,5,6,23,8,47,10,3">
+    <button onclick="bai3()">Xử lý Bài 3</button>
+    <div id="result3" class="result" style="display:none;"></div>
+</div>
+
+<!-- BÀI 4 -->
+<div class="bai-tap">
+    <h2>Bài 4: Quản lý điện thoại</h2>
+
+    <div style="margin-bottom: 20px;">
+        <h3>Thêm điện thoại mới:</h3>
+        <input type="text" id="maDT" placeholder="Mã điện thoại">
+        <input type="text" id="tenDT" placeholder="Tên điện thoại">
+        <input type="text" id="hangSX" placeholder="Hãng sản xuất">
+        <input type="number" id="giaDT" placeholder="Giá">
+        <button onclick="themDienThoai()">Thêm điện thoại</button>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <h3>Tìm kiếm:</h3>
+        <select id="loaiTimKiem">
+            <option value="ma">Tìm theo mã</option>
+            <option value="ten">Tìm theo tên</option>
+            <option value="hang">Tìm theo hãng</option>
+            <option value="gia">Tìm theo giá</option>
+        </select>
+        <input type="text" id="tuKhoa" placeholder="Nhập từ khóa tìm kiếm">
+        <button onclick="timKiem()">Tìm kiếm</button>
+    </div>
+
+    <button onclick="hienThiTatCa()" style="background: #28a745;">Hiển thị tất cả điện thoại</button>
+
+    <div id="result4" class="result" style="display:none;"></div>
+</div>
+
+<script>
+    let danhSachDienThoai = [];
+
+    // BÀI 1
+    function bai1() {
+        let input = document.getElementById('input1').value;
+        let arr = input.split(',').map(x => parseInt(x.trim())).filter(x => !isNaN(x));
+
+        if (arr.length === 0) {
+            alert('Vui lòng nhập mảng hợp lệ!');
+            return;
+        }
+        if (arr.length > 20) {
+            alert('Mảng không được vượt quá 20 phần tử!');
+            return;
+        }
+
+        let tongChan = 0;
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] % 2 === 0) tongChan += arr[i];
+        }
+
+        let tongLe = 0;
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] % 2 !== 0) tongLe += arr[i];
+        }
+
+        let hieu = tongChan - tongLe;
+
+        document.getElementById('result1').style.display = 'block';
+        document.getElementById('result1').innerHTML = `
+                <h3>Kết quả:</h3>
+                <p><strong>Mảng:</strong> [${arr.join(', ')}]</p>
+                <p><strong>Tổng số chẵn:</strong> ${tongChan}</p>
+                <p><strong>Tổng số lẻ:</strong> ${tongLe}</p>
+                <p><strong>Hiệu (Chẵn - Lẻ):</strong> ${tongChan} - ${tongLe} = ${hieu}</p>
+            `;
+    }
+
+    // BÀI 2
+    function bai2() {
+        let chuoi = document.getElementById('input2').value;
+
+        if (chuoi === '') {
+            alert('Vui lòng nhập chuỗi!');
+            return;
+        }
+
+        let demInHoa = 0;
+        for (let i = 0; i < chuoi.length; i++) {
+            let kyTu = chuoi[i];
+            if (kyTu >= 'A' && kyTu <= 'Z') {
+                demInHoa++;
+            }
+        }
+
+        let coKyTuInHoa = demInHoa > 0;
+        let chuoiKiemTra = "The Strings is not contain upper char";
+        let coChuoiDacBiet = chuoi.includes(chuoiKiemTra);
+
+        document.getElementById('result2').style.display = 'block';
+        document.getElementById('result2').innerHTML = `
+                <h3>Kết quả:</h3>
+                <p><strong>Chuỗi đầu vào:</strong> "${chuoi}"</p>
+                <p><strong>Số lượng ký tự in hoa:</strong> ${demInHoa}</p>
+                <p><strong>Có ký tự in hoa:</strong> ${coKyTuInHoa ? 'Có' : 'Không'}</p>
+                <p><strong>Kết quả kiểm tra:</strong> ${coChuoiDacBiet ? '"The Strings is not contain upper char"' : demInHoa}</p>
+            `;
+    }
+
+    // BÀI 3
+    function laSoNguyenTo(n) {
+        if (n < 2) return false;
+        for (let i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i === 0) return false;
+        }
+        return true;
+    }
+
+    function bai3() {
+        let input = document.getElementById('input3').value;
+        let arr = input.split(',').map(x => parseInt(x.trim())).filter(x => !isNaN(x));
+
+        if (arr.length === 0) {
+            alert('Vui lòng nhập mảng hợp lệ!');
+            return;
+        }
+
+        let soNguyenTo = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (laSoNguyenTo(arr[i])) {
+                soNguyenTo.push(arr[i]);
+            }
+        }
+
+        soNguyenTo.sort(function(a, b) {
+            return a - b;
+        });
+
+        document.getElementById('result3').style.display = 'block';
+        document.getElementById('result3').innerHTML = `
+                <h3>Kết quả:</h3>
+                <p><strong>Mảng đầu vào:</strong> [${arr.join(', ')}]</p>
+                <p><strong>Các số nguyên tố:</strong> [${soNguyenTo.length > 0 ? soNguyenTo.join(', ') : 'Không có'}]</p>
+                <p><strong>Mảng đã sắp xếp tăng dần:</strong> [${soNguyenTo.length > 0 ? soNguyenTo.join(', ') : 'Không có'}]</p>
+            `;
+    }
+
+    // BÀI 4
+    function themDienThoai() {
+        let ma = document.getElementById('maDT').value.trim();
+        let ten = document.getElementById('tenDT').value.trim();
+        let hang = document.getElementById('hangSX').value.trim();
+        let gia = document.getElementById('giaDT').value.trim();
+
+        if (!ma || !ten || !hang || !gia) {
+            alert('Vui lòng nhập đầy đủ thông tin!');
+            return;
+        }
+
+        let dienThoai = {
+            ma: ma,
+            ten: ten,
+            hang: hang,
+            gia: parseFloat(gia)
+        };
+
+        danhSachDienThoai.push(dienThoai);
+
+        // Xóa form
+        document.getElementById('maDT').value = '';
+        document.getElementById('tenDT').value = '';
+        document.getElementById('hangSX').value = '';
+        document.getElementById('giaDT').value = '';
+
+        alert('Đã thêm điện thoại thành công!');
+        hienThiTatCa();
+    }
+
+    function hienThiDanhSach(danhSach) {
+        if (danhSach.length === 0) {
+            return '<p>Không có điện thoại nào!</p>';
+        }
+
+        let html = '<div class="phone-list">';
+        html += '<h3>Danh sách điện thoại (Sắp xếp theo tên):</h3>';
+
+        danhSach.sort(function(a, b) {
+            return a.ten.localeCompare(b.ten);
+        });
+
+        for (let i = 0; i < danhSach.length; i++) {
+            let dt = danhSach[i];
+            html += `
+                    <div class="phone-item">
+                        <strong>Mã:</strong> ${dt.ma} |
+                        <strong>Tên:</strong> ${dt.ten} |
+                        <strong>Hãng:</strong> ${dt.hang} |
+                        <strong>Giá:</strong> ${dt.gia.toLocaleString()} VNĐ
+                    </div>
+                `;
+        }
+        html += '</div>';
+        return html;
+    }
+
+    function hienThiTatCa() {
+        document.getElementById('result4').style.display = 'block';
+        document.getElementById('result4').innerHTML = `
+                <h3>Tất cả điện thoại (${danhSachDienThoai.length}):</h3>
+                ${hienThiDanhSach(danhSachDienThoai)}
+            `;
+    }
+
+    function timKiem() {
+        let loai = document.getElementById('loaiTimKiem').value;
+        let tuKhoa = document.getElementById('tuKhoa').value.trim().toLowerCase();
+
+        if (!tuKhoa) {
+            alert('Vui lòng nhập từ khóa tìm kiếm!');
+            return;
+        }
+
+        let ketQua = [];
+
+        for (let i = 0; i < danhSachDienThoai.length; i++) {
+            let dt = danhSachDienThoai[i];
+
+            if (loai === 'ma' && dt.ma.toLowerCase().includes(tuKhoa)) {
+                ketQua.push(dt);
+            } else if (loai === 'ten' && dt.ten.toLowerCase().includes(tuKhoa)) {
+                ketQua.push(dt);
+            } else if (loai === 'hang' && dt.hang.toLowerCase().includes(tuKhoa)) {
+                ketQua.push(dt);
+            } else if (loai === 'gia' && dt.gia.toString().includes(tuKhoa)) {
+                ketQua.push(dt);
+            }
+        }
+
+        document.getElementById('result4').style.display = 'block';
+        document.getElementById('result4').innerHTML = `
+                <h3>Kết quả tìm kiếm (${ketQua.length}):</h3>
+                ${hienThiDanhSach(ketQua)}
+            `;
+    }
+</script>
+</body>
+</html>
